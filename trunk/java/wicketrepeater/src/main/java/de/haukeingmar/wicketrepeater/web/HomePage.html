@@ -1,0 +1,29 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.5-strict.dtd" >
+    <head>  
+        <title>Wicket/JPA/Spring repeater sample</title>
+    </head>
+    <body>
+        <h1>Pagination, lazy loading, filtering, ordering</h1>
+        
+        Filter: <a wicket:id="linkAll" href="#">All entries</a> | <a wicket:id="linkStartingWithA" href="#">Beginning with A</a> | <a wicket:id="linkStartingWithR" href="#">Beginning with R</a>
+        
+		<table>
+		
+			<tr>
+				<th><a href="#" wicket:id="orderByAuthor">Author</a></th>
+				<th><a href="#" wicket:id="orderByTitle">Title</a></th>
+			</tr>
+		
+			<tr wicket:id="table">
+				<td><span wicket:id="author"></span></td>	
+				<td><span wicket:id="title"></span></td>	
+			</tr>
+		
+		</table>     
+		
+		<div wicket:id="navigator"></div>   
+		
+		<a href="#" wicket:id="orderByNothing">Order by nothing (DB decides!)</a>
+        
+    </body>
+</html>

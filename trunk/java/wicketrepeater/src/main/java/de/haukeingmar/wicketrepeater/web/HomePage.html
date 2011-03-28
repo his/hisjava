@@ -6,7 +6,11 @@
         <h1>Pagination, lazy loading, filtering, ordering</h1>
         
         Filter: <a wicket:id="linkAll" href="#">All entries</a> | <a wicket:id="linkStartingWithA" href="#">Beginning with A</a> | <a wicket:id="linkStartingWithR" href="#">Beginning with R</a>
-        
+        <form wicket:id="formFilter">
+        Custom Filter: <input type="text" wicket:id="filterString" value="ZZ%" /> <button type="submit" wicket:id="doFilter">Filter</button>
+        </form>
+		<div wicket:id="navigator">[Pager]</div>   
+
 		<table>
 		
 			<tr>
@@ -21,7 +25,6 @@
 		
 		</table>     
 		
-		<div wicket:id="navigator"></div>   
 		
 		<a href="#" wicket:id="orderByNothing">Order by nothing (DB decides!)</a>
         

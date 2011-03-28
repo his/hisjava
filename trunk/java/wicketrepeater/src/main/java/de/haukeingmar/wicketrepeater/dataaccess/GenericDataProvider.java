@@ -1,6 +1,8 @@
 package de.haukeingmar.wicketrepeater.dataaccess;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
@@ -33,6 +35,8 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 
 	private Class<T> clazz;
 
+	private Map<String, Object> queryParameters = new HashMap<String, Object>();
+
 	/**
 	 * Creates a generic data provider. The entity name by which you can access
 	 * properties within the order and filter clauses will be set to the simple
@@ -59,6 +63,13 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 		Injector.get().inject(this);
 		this.clazz = clazz;
 		this.entityName = entityName;
+	}
+
+	/**
+	 * Clears the parameter map.
+	 */
+	public void clearParameters() {
+		queryParameters.clear();
 	}
 
 	@Override
@@ -93,14 +104,58 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 		return orderClause;
 	}
 
+	/**
+	 * Returns the parameter map.
+	 * 
+	 * @return The current instance of the parameter map
+	 */
+	public Map<String, Object> getParameterMap() {
+		return queryParameters;
+	}
+
 	@Override
 	public Iterator<? extends T> iterator(final int first, final int count) {
-		return genericObjectLoader.getList(clazz, first, count, entityName, filter, orderClause).iterator();
+		return genericObjectLoader.getList(clazz, first, count, entityName, filter, orderClause, queryParameters)
+				.iterator();
 	}
 
 	@Override
 	public IModel<T> model(final T object) {
 		return new DomainObjectLoadableDetachableModel<T>(clazz, object);
+	}
+
+	/**
+	 * Adds a parameter to the parameter map or replaces it.
+	 * 
+	 * The only validity checks made here are checks for null; both name and
+	 * value must not be null.
+	 * 
+	 * @param name
+	 *            The parameter name used in the filter or order JPQL fragment
+	 * @param value
+	 *            The value to be set
+	 * @throws IllegalArgumentException
+	 *             When either name or value is nulls
+	 */
+	public void putParameter(final String name, final Object value) {
+		if (name == null) {
+			throw new IllegalArgumentException("name must not be null");
+		}
+		if (value == null) {
+			throw new IllegalArgumentException("value must not be null");
+		}
+
+		queryParameters.put(name, value);
+	}
+
+	/**
+	 * Removes the parameter designated by name from the query parameter map.
+	 * 
+	 * @param name
+	 *            The parameter to remove
+	 */
+	public void removeParameter(final String name) {
+		queryParameters.remove(name);
 	}
 
 	/**
@@ -142,7 +197,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 		// XXX IDataProvider is restricted to int.
 		// Maybe do "something" here? Return Integer.MAX_VALUE? Throw a runtime
 		// exception? Submit a patch to Wicket?
-		return (int) genericObjectLoader.count(clazz, entityName, filter);
+		return (int) genericObjectLoader.count(clazz, entityName, filter, queryParameters);
 	}
 
 }

@@ -45,12 +45,11 @@ public class GenericObjectLoader {
 	}
 
 	private void fillParameters(final Query query, final Map<String, Object> parameterMap) {
-		Set<String> parameterNames = new HashSet<String>();
-		for (Parameter p : query.getParameters()) {
-			parameterNames.add(p.getName());
-		}
-
 		if (parameterMap != null) {
+         Set<String> parameterNames = new HashSet<String>();
+         for (Parameter p : query.getParameters()) {
+            parameterNames.add(p.getName());
+         }
 			for (String aName : parameterMap.keySet()) {
 				if (parameterNames.contains(aName)) {
 					query.setParameter(aName, parameterMap.get(aName));

@@ -31,9 +31,22 @@ public class DomainObjectLoadableDetachableModel<T extends HasId> extends Loadab
 		this.clazz = clazz;
 	}
 
-	@Override
 	protected T load() {
-		return genericObjectLoader.load(clazz, key);
+		if (key != null) {
+			return genericObjectLoader.load(clazz, key);
+		} else {
+			return null;
+		}
 	}
+
+	@Override
+	public void setObject(final T object) {
+		super.setObject(object);
+		if (object != null) {
+			key = object.getId();
+		} else {
+			key = null;
+		}
+	};
 
 }

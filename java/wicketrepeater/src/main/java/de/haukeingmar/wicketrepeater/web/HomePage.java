@@ -9,29 +9,34 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.haukeingmar.wicketrepeater.dataaccess.GenericDataProvider;
-import de.haukeingmar.wicketrepeater.model.Book;
+import de.haukeingmar.wicketrepeater.dataaccess.JpqlQueryDataProvider;
+import de.haukeingmar.wicketrepeater.dataaccess.NamedQueryDataProvider;
+import de.haukeingmar.wicketrepeater.model.Author;
 
+/**
+ * A simple example for the {@link GenericDataProvider}. See {@link DetailsPage} for the more sophisticated
+ * {@link JpqlQueryDataProvider} and {@link NamedQueryDataProvider}.
+ */
 public class HomePage extends WebPage {
 
 	private static final long serialVersionUID = 6937466747068718689L;
 
-	private String filterString = "ZZ%";
-
 	public HomePage(final PageParameters parameters) {
 
-		final GenericDataProvider bookDataProvider = new GenericDataProvider(Book.class);
+		final GenericDataProvider<Author> authorDataProvider = new GenericDataProvider<Author>(Author.class);
 
-		DataView<Book> dataView = new DataView<Book>("table", bookDataProvider) {
+		DataView<Author> dataView = new DataView<Author>("table", authorDataProvider) {
 			private static final long serialVersionUID = -1697604589968241161L;
 
 			@Override
-			protected void populateItem(final Item<Book> item) {
-				item.add(new Label("author", item.getModelObject().getAuthor()));
-				item.add(new Label("title", item.getModelObject().getTitle()));
+			protected void populateItem(final Item<Author> item) {
+				item.add(new Label("id", "" + item.getModelObject().getId()));
+				item.add(new Label("name", item.getModelObject().getName()));
 			}
 		};
 		dataView.setItemsPerPage(10);
@@ -42,74 +47,57 @@ public class HomePage extends WebPage {
 		add(new Link("linkAll") {
 			@Override
 			public void onClick() {
-				bookDataProvider.setFilter(null);
+				authorDataProvider.setFilter(null);
 			}
 		});
 
 		add(new Link("linkStartingWithA") {
 			@Override
 			public void onClick() {
-				bookDataProvider.setFilter("book.author like 'A%'");
+				authorDataProvider.setFilter("author.name like 'A%'");
 			}
 		});
 
 		add(new Link("linkStartingWithR") {
 			@Override
 			public void onClick() {
-				bookDataProvider.setFilter("book.author like 'R%'");
-			}
-		});
-
-		add(new Link("orderByNothing") {
-			@Override
-			public void onClick() {
-				bookDataProvider.setOrderClause(null);
+				authorDataProvider.setFilter("author.name like 'R%'");
 			}
 		});
 
 		add(new Link("orderByAuthor") {
 			@Override
 			public void onClick() {
-				bookDataProvider.setOrderClause("book.author");
+				authorDataProvider.setOrderClause("author.name ASC");
 			}
 		});
 
-		add(new Link("orderByTitle") {
+		add(new Link("orderById") {
 			@Override
 			public void onClick() {
-				bookDataProvider.setOrderClause("book.title");
+				authorDataProvider.setOrderClause("author.id ASC");
 			}
 		});
 
 		Form formFilter = new Form("formFilter");
 
-		formFilter.add(new TextField<String>("filterString", new PropertyModel<String>(this, "filterString"),
-				String.class));
+		final IModel<String> filterStringModel = new Model<String>("ZZ%");
+		formFilter.add(new TextField<String>("filterString", filterStringModel, String.class));
 		formFilter.add(new Button("doFilter") {
 			@Override
 			public void onSubmit() {
 				/*
-				 * When using user-submitted strings you should validate and
-				 * sanitize the input. Not using string concatenation is one
-				 * step; this is what this sample should show, so we will not do
-				 * any further checks here (in onValidate, where such should be
-				 * done).
+				 * When using user-submitted strings you should validate and sanitize the input. Not using string
+				 * concatenation is one step; this is what this sample should show, so we will not do any further checks
+				 * here (in onValidate, where such should be done).
 				 */
-				bookDataProvider.setFilter("book.author like :filter");
-				bookDataProvider.putParameter("filter", filterString);
+				authorDataProvider.setFilter("author.name like :filter");
+				authorDataProvider.putParameter("filter", filterStringModel.getObject());
 			}
 		});
 
 		add(formFilter);
 
-	}
-
-	public String getFilterString() {
-		return filterString;
-	}
-
-	public void setFilterString(final String filterString) {
-		this.filterString = filterString;
 	}
 
 }

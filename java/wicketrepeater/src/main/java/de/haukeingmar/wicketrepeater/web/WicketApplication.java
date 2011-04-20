@@ -27,7 +27,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
 		SampleDataCreator dataCreator = context.getBean(SampleDataCreator.class);
 
-		dataCreator.createSampleData(1000);
+		dataCreator.createSampleData(100);
 	}
 
 	@Override

@@ -4,7 +4,12 @@
     </head>
     <body>
         <h1>Pagination, lazy loading, filtering, ordering</h1>
-        
+
+		<p>
+			<wicket:link>        
+        		<a href="DetailsPage.html">Sample with DetailView and different IDataProviders</a>
+        	</wicket:link>
+        </p>
         Filter: <a wicket:id="linkAll" href="#">All entries</a> | <a wicket:id="linkStartingWithA" href="#">Beginning with A</a> | <a wicket:id="linkStartingWithR" href="#">Beginning with R</a>
         <form wicket:id="formFilter">
         Custom Filter: <input type="text" wicket:id="filterString" value="ZZ%" /> <button type="submit" wicket:id="doFilter">Filter</button>
@@ -14,19 +19,16 @@
 		<table>
 		
 			<tr>
+				<th><a href="#" wicket:id="orderById">ID</a></th>
 				<th><a href="#" wicket:id="orderByAuthor">Author</a></th>
-				<th><a href="#" wicket:id="orderByTitle">Title</a></th>
 			</tr>
 		
 			<tr wicket:id="table">
-				<td><span wicket:id="author"></span></td>	
-				<td><span wicket:id="title"></span></td>	
+				<td><span wicket:id="id"></span></td>	
+				<td><span wicket:id="name"></span></td>	
 			</tr>
 		
 		</table>     
-		
-		
-		<a href="#" wicket:id="orderByNothing">Order by nothing (DB decides!)</a>
         
     </body>
 </html>

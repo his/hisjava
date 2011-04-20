@@ -6,10 +6,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.haukeingmar.wicketrepeater.model.Book;
+import de.haukeingmar.wicketrepeater.model.Author;
 
 @Repository
-public class BookDao {
+public class AuthorDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -19,8 +19,8 @@ public class BookDao {
 	}
 
 	@Transactional
-	public void save(final Book book) {
-		entityManager.persist(book);
+	public void save(final Author author) {
+		entityManager.persist(author);
 	}
 
 	public void setEntityManager(final EntityManager entityManager) {

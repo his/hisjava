@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.5-strict.dtd" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Detailview, with different IDataProviders</title>
+</head>
+<body>
+
+<h1>Three different data provider</h1>
+
+<p>
+<wicket:link>
+	<a href="HomePage.html">Simple</a>
+</wicket:link>
+</p>
+
+<div style="float: left; width: 40%;">
+<h2>Author list</h2>
+<p>Done by the GenericDataProvider.</p>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+	</tr>
+	<tr wicket:id="authorlist">
+		<td><span wicket:id="authorid">[Id]</span></td>
+		<td><a href="#" wicket:id="authorselectlink"><span wicket:id="authorname">[Name]</span></a></td>
+	</tr>
+</table>
+<div wicket:id="authornavigator">[Navigation]</div>
+</div>
+
+<div style="width:40%; float:right;">
+<!-- Autorenliste -->
+<div>
+<h2>Details</h2>
+<p>
+	Selected Author: <em><span wicket:id="selectedAuthorName">[Selected Author]</span></em>
+</p>
+<p>
+Details by named query. Query check by JPA provider and IDE support possible.
+</p>
+<div wicket:id="namedquerydetails">
+</div>
+
+<p>
+Same details by JPQL data provider. Good for fast prototyping.
+</p>
+<div wicket:id="jpqldetails">
+</div>
+</div>
+</div>
+
+</body>
+</html>

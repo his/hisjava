@@ -1,8 +1,17 @@
 package de.haukeingmar.wicketrepeater.model;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.CascadeType.REMOVE;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book implements HasId {
@@ -11,11 +20,13 @@ public class Book implements HasId {
 	@GeneratedValue
 	private Long id;
 
-	private String author;
-
 	private String title;
 
-	public String getAuthor() {
+	@ManyToOne(cascade = { ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH })
+	@JoinColumn(name = "author_id", referencedColumnName = "id")
+	private Author author;
+
+	public Author getAuthor() {
 		return author;
 	}
 
@@ -28,7 +39,7 @@ public class Book implements HasId {
 		return title;
 	}
 
-	public void setAuthor(final String author) {
+	public void setAuthor(final Author author) {
 		this.author = author;
 	}
 

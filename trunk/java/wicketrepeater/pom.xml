@@ -4,21 +4,10 @@
 	<groupId>de.haukeingmar</groupId>
 	<artifactId>wicketrepeater</artifactId>
 	<packaging>war</packaging>
+	<name>Wicketrepeater Sample</name>
 	<version>0.0.1-SNAPSHOT</version>
-	<!-- TODO project name  -->
-	<name>quickstart</name>
 	<description></description>
-	<!--
-		TODO <organization> <name>company name</name> <url>company url</url>
-		</organization>
-	-->
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+	<url>http://hisjava.blogspot.com/2011/03/generic-jpa-idataprovider-for-wicket.html</url>
 	<repositories>
 		<repository>
 			<snapshots>
@@ -29,12 +18,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!--  WICKET DEPENDENCIES -->
-		<!--
-			OPTIONAL <dependency> <groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version> </dependency>
-		-->
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
@@ -167,6 +150,9 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
+	<scm>
+		<url>http://code.google.com/p/hisjava/source/browse/#svn%2Ftrunk%2Fjava%2Fwicketrepeater</url>
+	</scm>
 	<build>
 		<resources>
 			<resource>

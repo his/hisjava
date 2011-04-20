@@ -2,11 +2,17 @@ package de.haukeingmar.wicketrepeater.dao;
 
 import java.util.Random;
 
+import de.haukeingmar.wicketrepeater.model.Author;
 import de.haukeingmar.wicketrepeater.model.Book;
 
+/**
+ * Creates the sample data.
+ */
 public class SampleDataCreator {
 
 	private BookDao bookDao;
+
+	private AuthorDao authorDao;
 
 	private String availableCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -30,15 +36,30 @@ public class SampleDataCreator {
 
 	public void createSampleData(final int count) {
 		for (int i = 0; i < count; i++) {
-			Book newBook = new Book();
-			newBook.setAuthor(createRandomAuthor());
-			newBook.setTitle(createRandomTitle());
-			bookDao.save(newBook);
+			Author newAuthor = new Author();
+			newAuthor.setName(createRandomAuthor());
+
+			for (int j = 0; j < 5; j++) {
+				Book newBook = new Book();
+				newBook.setTitle(createRandomTitle());
+				newAuthor.addBook(newBook);
+			}
+
+			authorDao.save(newAuthor);
+
 		}
+	}
+
+	public AuthorDao getAuthorDao() {
+		return authorDao;
 	}
 
 	public BookDao getBookDao() {
 		return bookDao;
+	}
+
+	public void setAuthorDao(final AuthorDao authorDao) {
+		this.authorDao = authorDao;
 	}
 
 	public void setBookDao(final BookDao bookDao) {

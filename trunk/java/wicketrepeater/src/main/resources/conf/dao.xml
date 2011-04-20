@@ -29,13 +29,16 @@
 	
 	<bean class="de.haukeingmar.wicketrepeater.dao.SampleDataCreator">
 		<property name="bookDao" ref="bookDao"/>
+		<property name="authorDao" ref="authorDao" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
-	<bean class="de.haukeingmar.wicketrepeater.dao.BookDaoImpl" name="bookDao"/>
+	<bean class="de.haukeingmar.wicketrepeater.dao.BookDao" name="bookDao" />
+	
+	<bean class="de.haukeingmar.wicketrepeater.dao.AuthorDao" name="authorDao" />
 	
 	<bean class="de.haukeingmar.wicketrepeater.dao.GenericObjectLoader" name="genericObjectLoader"/>
 	

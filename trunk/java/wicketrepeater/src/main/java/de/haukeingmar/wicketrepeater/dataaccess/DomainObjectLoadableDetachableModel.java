@@ -9,8 +9,14 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import de.haukeingmar.wicketrepeater.dao.GenericObjectLoader;
 import de.haukeingmar.wicketrepeater.model.HasId;
 
+/**
+ * A Wicket model that knows about the {@link GenericObjectLoader} and the domain models defined by {@link HasId} and
+ * thus can load and detach by class and key.
+ * 
+ * @param <T>
+ *            The type of the domain object this model is holding
+ */
 public class DomainObjectLoadableDetachableModel<T extends HasId> extends LoadableDetachableModel<T> {
-
 	private static final long serialVersionUID = 5415650199676165220L;
 
 	@SpringBean
@@ -31,6 +37,7 @@ public class DomainObjectLoadableDetachableModel<T extends HasId> extends Loadab
 		this.clazz = clazz;
 	}
 
+	@Override
 	protected T load() {
 		if (key != null) {
 			return genericObjectLoader.load(clazz, key);
@@ -47,6 +54,5 @@ public class DomainObjectLoadableDetachableModel<T extends HasId> extends Loadab
 		} else {
 			key = null;
 		}
-	};
-
+	}
 }

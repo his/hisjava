@@ -13,9 +13,10 @@ import de.haukeingmar.wicketrepeater.dao.GenericObjectLoader;
 import de.haukeingmar.wicketrepeater.model.HasId;
 
 /**
- * Provides a convenient way to create a data provider for repeatable views for
- * our domain objects (i.e. objects that implement the {@link HasId} interface
- * and that are loaded via Spring managed JPA).
+ * Provides a convenient way to create a data provider for repeatable views for our domain objects (i.e. objects that
+ * implement the {@link HasId} interface and that are loaded via Spring managed JPA).
+ * 
+ * This data provider allows you to define the list by object class, order and filter clauses.
  * 
  * @param <T>
  *            The class of the objects this data provider provides
@@ -38,9 +39,8 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	private Map<String, Object> queryParameters = new HashMap<String, Object>();
 
 	/**
-	 * Creates a generic data provider. The entity name by which you can access
-	 * properties within the order and filter clauses will be set to the simple
-	 * name of the class in lowercase.
+	 * Creates a generic data provider. The entity name by which you can access properties within the order and filter
+	 * clauses will be set to the simple name of the class in lowercase.
 	 * 
 	 * @param clazz
 	 *            The class of the objects this data provider provides
@@ -50,14 +50,13 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	/**
-	 * Creates a generic data provider. The entity name lets you access object
-	 * properties in the order and filter clauses.
+	 * Creates a generic data provider. The entity name lets you access object properties in the order and filter
+	 * clauses.
 	 * 
 	 * @param clazz
 	 *            The class of the objects this data provider provides
 	 * @param entityName
-	 *            The name by which you can access object properties within the
-	 *            order and filter clause
+	 *            The name by which you can access object properties within the order and filter clause
 	 */
 	public GenericDataProvider(final Class<T> clazz, final String entityName) {
 		Injector.get().inject(this);
@@ -77,8 +76,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	/**
-	 * Returns the entity name by which you can access object properties in the
-	 * order and filter clause.
+	 * Returns the entity name by which you can access object properties in the order and filter clause.
 	 * 
 	 * @return The entity name in use
 	 */
@@ -114,7 +112,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	@Override
-	public Iterator<? extends T> iterator(final int first, final int count) {
+	public Iterator<T> iterator(final int first, final int count) {
 		return genericObjectLoader.getList(clazz, first, count, entityName, filter, orderClause, queryParameters)
 				.iterator();
 	}
@@ -127,8 +125,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	/**
 	 * Adds a parameter to the parameter map or replaces it.
 	 * 
-	 * The only validity checks made here are checks for null; both name and
-	 * value must not be null.
+	 * The only validity checks made here are checks for null; both name and value must not be null.
 	 * 
 	 * @param name
 	 *            The parameter name used in the filter or order JPQL fragment
@@ -159,9 +156,8 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	/**
-	 * Sets the entity name by which you can access object properties in the
-	 * order and filter clauses. Should be a legal JPQL identifier. Defaults to
-	 * the classes simple name in lowercase.
+	 * Sets the entity name by which you can access object properties in the order and filter clauses. Should be a legal
+	 * JPQL identifier. Defaults to the classes simple name in lowercase.
 	 * 
 	 * @param entityName
 	 *            The entity name in use
@@ -171,8 +167,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	/**
-	 * The filter clause in JPQL. Will be used as the JPQL 'where' clause. You
-	 * don't need to supply the 'where'.
+	 * The filter clause in JPQL. Will be used as the JPQL 'where' clause. You don't need to supply the 'where'.
 	 * 
 	 * @param filter
 	 *            The filter clause
@@ -182,8 +177,7 @@ public class GenericDataProvider<T extends HasId> implements IDataProvider<T> {
 	}
 
 	/**
-	 * The order clause in JPQL. Will be used as the JPQL 'order by' clause. You
-	 * don't need to supply the 'order by'.
+	 * The order clause in JPQL. Will be used as the JPQL 'order by' clause. You don't need to supply the 'order by'.
 	 * 
 	 * @param orderClause
 	 *            The order clause

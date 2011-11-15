@@ -19,8 +19,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Author.countBooks", query = "select count(*) from Book b where b.author.id=:authorId"),
-		@NamedQuery(name = "Author.listBooks", query = "from Book b where b.author.id=:authorId") })
+		@NamedQuery(name = "Author.countBooks", query = "select count(b) from Book b where b.author.id=:authorId"),
+		@NamedQuery(name = "Author.listBooks", query = "select b from Book b where b.author.id=:authorId") })
 public class Author implements HasId {
 
 	@Id

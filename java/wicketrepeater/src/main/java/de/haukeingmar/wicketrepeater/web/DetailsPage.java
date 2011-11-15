@@ -72,8 +72,8 @@ public class DetailsPage extends WebPage {
 		 * The JpqlQueryDataProvider.
 		 */
 		bookJpqlDataprovider = new JpqlQueryDataProvider<Book>(Book.class);
-		bookJpqlDataprovider.setCountQuery("select count(*) from Book b where b.author.id=:authorId");
-		bookJpqlDataprovider.setListQuery("from Book b where b.author.id=:authorId");
+		bookJpqlDataprovider.setCountQuery("select count(b) from Book b where b.author.id=:authorId");
+		bookJpqlDataprovider.setListQuery("select b from Book b where b.author.id=:authorId");
 		bookJpqlDataprovider.putParameter("authorId", -1L);
 		add(new BookListPanel("jpqldetails", bookJpqlDataprovider));
 

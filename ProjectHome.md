@@ -1,0 +1,1 @@
+Longer code samples for techniques I present at my blog at http://hisjava.blogspot.com. Will be mostly Java, Wicket, JPA, Spring, GWT stuff.
